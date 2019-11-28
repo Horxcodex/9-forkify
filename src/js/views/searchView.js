@@ -10,6 +10,7 @@ export const clearInput = () => {
 
 export const clearResults = () => {
 	elements.searchResultList.innerHTML = '';
+	elements.searchResPages.innerHTML = '';
 };
 
 // Limit Title
@@ -33,7 +34,7 @@ const limitRecipeTitle = (title, limit = 17) => {
 	}
 };
 
-// cara 1 adalah cara paling simple :)
+// cara 2 adalah cara paling simple :)
 /* const limitRecipeTitle = (title, limit = 17) =>{
     if (title.length > limit){
       let newTitle=  title.split('').splice(0,limit);
@@ -94,10 +95,10 @@ export const renderRecipe = (recipe) => {
 const createButton = (page, type) => {
 	return `
 		<button class="btn-inline results__btn--${type}" data-goto=${type === 'prev' ? page - 1 : page + 1}>
+			<span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
 			<svg class="search__icon">
 				<use href="img/icons.svg#icon-triangle-${type === 'prev' ? 'left' : 'right'}"></use>
 			</svg>
-			<span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
 		</button>
 	`;
 };
@@ -132,6 +133,6 @@ export const renderResults = (recipes, page = 1, resPerPage = 10) => {
 
 	recipes.slice(start, end).forEach(renderRecipe);
 
-	// render pagination buttons
+	// render/show pagination buttons
 	renderButtons(page, recipes.length, resPerPage);
 };

@@ -40,3 +40,21 @@ elements.searchForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	controlSearch();
 });
+
+// add event listener to pages Note: Event Delegation
+
+elements.searchResPages.addEventListener('click', (e) => {
+	// 1. Choose the button that we want to click
+	const btn = e.target.closest('.btn-inline');
+	if (btn) {
+		// 2. Declare the goToPage with choosing the button, and convrt it to int.
+		const goToPage = parseInt(btn.dataset.goto, 10);
+
+		// 3. Clear the result and the button before next render shows up the results.
+		searchView.clearResults();
+
+		// 4. Render the result again. Becuz we want to show the reult to UI again. note : goToPage = page in renderResults function
+		searchView.renderResults(state.search.result, goToPage);
+		//console.log(goToPage);
+	}
+});
