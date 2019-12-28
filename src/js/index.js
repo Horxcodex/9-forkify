@@ -16,10 +16,10 @@ const state = {};
 
 const controlSearch = async () => {
 	// 1. Get query from view
-	//const query = searchView.getInput(); //TODO
+	const query = searchView.getInput(); //TODO
 
-	// TESTING
-	const query = 'pizza';
+	/* // TESTING
+	const query = 'pizza'; */
 	//console.log(query);
 
 	if (query) {
@@ -52,10 +52,11 @@ elements.searchForm.addEventListener('submit', (e) => {
 	controlSearch();
 });
 
+/* // TESTING
 window.addEventListener('load', (e) => {
 	e.preventDefault();
 	controlSearch();
-});
+}); */
 
 // add event listener to pages Note: Event Delegation
 
@@ -92,12 +93,14 @@ const controlRecipe = async () => {
 		// 3. Create new recipe object
 		state.recipe = new Recipe(id);
 
-		// TESTING
-		window.r = state.recipe;
+		/* // TESTING
+		window.r = state.recipe; */
 
 		try {
-			// 4. Get recipe data
+			// 4. Get recipe data and parse the inghredients
 			await state.recipe.getRecipe();
+			console.log(state.recipe.ingredients);
+			state.recipe.parseIngredients();
 
 			// 5. Calculte servings and time by calling the method
 			state.recipe.calcTime();
