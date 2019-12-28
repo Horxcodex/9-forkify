@@ -1,0 +1,19 @@
+// "4 cups Orange Zest"
+let string1 = "4-1/3 cup Baking Powder"
+splitted = string1.split(' ');
+console.log(splitted);
+
+const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+
+const unitIndex = splitted.findIndex((cur) => {
+				return unitsShort.includes(cur);
+			});
+
+console.log(unitIndex);
+
+const arrCount = splitted.slice(0, unitIndex);
+console.log(arrCount);
+
+
+
+

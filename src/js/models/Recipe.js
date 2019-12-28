@@ -42,7 +42,7 @@ export default class Recipe {
 				ingredient = ingredient.replace(cur, unitsShort[i]);
 			});
 
-			// 2). remove the parenthesis "()""
+			// 2). remove the parenthesis "()"
 			ingredient = ingredient.replace(/ *\([^)]*\) */g, ' ');
 
 			// 3). parse ingredients into count, unit and ingredient
@@ -54,15 +54,14 @@ export default class Recipe {
 			let objIng;
 			if (unitIndex > -1) {
 				// there is a unit
-				// Ex. 4 cups, the arrCount is [4] ; case 1 (there's only 1 number)
-				// Ex. 4 1/2 cups, the arrCount is [4, 1/2] --> eval("4+1/2") --> 4.5 ; case 2 (there are 2 number)
+				// Ex. 4 cups, the arrCount is [4] ; case 1 (there's only 1 number) case 1
+				// Ex. 4 1/2 cups, the arrCount is [4, 1/2] --> eval("4+1/2") --> 4.5 ; case 2 (there are 2 number) case 2
 				const arrCount = arrIng.slice(0, unitIndex);
 				let count;
-
 				if (arrCount.length === 1) {
 					count = eval(arrIng[0].replace('-', '+')); //case 1
 				} else {
-					count = eval(arrIng.slice(0, unitIndex).split('+'));
+					count = eval(arrIng.slice(0, unitIndex).join('+')); //case 2
 				}
 
 				objIng = {
@@ -85,11 +84,9 @@ export default class Recipe {
 					ingredient // it's the same like ingredient: ingredient
 				};
 			}
-
 			return objIng;
 			//return ingredient;
 		});
-
 		this.ingredients = newIngredients;
 	}
 }
