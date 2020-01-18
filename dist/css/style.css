@@ -448,16 +448,16 @@ body {
 .recipe__info-buttons {
 	display: flex;
 	margin-left: 1.5rem;
-	visibility: hidden;
-	opacity: 0;
-	transform: translateY(5px);
-	transition: all .4s;
+	//visibility: hidden;
+	//opacity: 0;
+	//transform: translateY(5px);
+	//transition: all .4s;
 }
-.recipe:hover .recipe__info-buttons {
-	visibility: visible;
-	opacity: 1;
-	transform: translateY(0);
-}
+//.recipe:hover .recipe__info-buttons {
+//visibility: visible;
+//opacity: 1;
+//transform: translateY(0);
+//}
 .recipe__love {
 	background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
 	border-radius: 50%;

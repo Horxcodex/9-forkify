@@ -90,6 +90,19 @@ export default class Recipe {
 		});
 		this.ingredients = newIngredients;
 	}
+
+	updateServings(type) {
+		// Update Servings
+		const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+
+		// Update Ingredient
+		this.ingredients.forEach((cur) => {
+			cur.count = cur.count * (newServings / this.servings);
+			// or like this : cur.count *= (newServings / this.servings);
+		});
+
+		this.servings = newServings;
+	}
 }
 
 // create two arrays & in one array we will have the units as they appear in our ingredients,
