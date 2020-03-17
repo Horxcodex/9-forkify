@@ -1,6 +1,7 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import List from './models/List';
+import Likes from './models/Likes';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
@@ -136,6 +137,7 @@ const controlRecipe = async () => {
 ['hashchange', 'load'].forEach((cur) => window.addEventListener(cur, controlRecipe));
 
 // --------------------------LIST CONTROLLER---------------------------------
+
 const controlList = () => {
 	// Create a new list IF there is not yet
 	if (!state.list) state.list = new List();
@@ -170,6 +172,34 @@ elements.shopping.addEventListener('click', (e) => {
 	}
 });
 
+// --------------------------Likes CONTROLLER---------------------------------
+
+const controlLike = () => {
+	// Create a new likes IF there is not yet
+	if (!state.likes) state.likes = new Likes();
+	const currentID = state.recipe.id;
+
+	// User has not yet liked current recipe
+	if (!state.likes.isLiked(currentID)) {
+		// add like to the state
+		const newLike = state.likes.addLike(state.recipe.id, state.recipe.title, state.recipe.author, state.recipe.img);
+
+		// toggle the like button
+
+		// add like to UI list
+		console.log(state.likes);
+	} else {
+		// User has liked current recipe :
+		// remove like to the state
+		state.likes.deleteLike(currentID);
+
+		// toggle the like button
+
+		// remove like from UI list
+		console.log(state.likes);
+	}
+};
+
 // handling recipe button clicks
 elements.recipe.addEventListener('click', (e) => {
 	if (e.target.matches('.btn-decrease, .btn-decrease *')) {
@@ -183,7 +213,11 @@ elements.recipe.addEventListener('click', (e) => {
 		state.recipe.updateServings('inc');
 		recipeView.updateServingsIngredients(state.recipe);
 	} else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
+		// add ingredient to shopping list
 		controlList();
+	} else if (e.target.matches('.recipe__love, .recipe__love *')) {
+		// do like
+		controlLike();
 	}
 
 	console.log(state.recipe);
