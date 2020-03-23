@@ -5,6 +5,7 @@ import Likes from './models/Likes';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
+import * as likesView from './views/likesView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
 /* *Global state of the app
@@ -122,10 +123,11 @@ const controlRecipe = async () => {
 
 			// 6. Render recipe to UI.
 			clearLoader();
-			recipeView.renderRecipe(state.recipe);
+			recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
 			//console.log(state.recipe);
 			//console.log(state);
 		} catch (err) {
+			console.log(err);
 			alert('Error Proccesing Recipe!');
 		}
 	}
@@ -172,7 +174,10 @@ elements.shopping.addEventListener('click', (e) => {
 	}
 });
 
-// --------------------------Likes CONTROLLER---------------------------------
+// --------------------------LIKES CONTROLLER---------------------------------
+// for testing purposes
+state.likes = new Likes();
+likesView.toggleLikeMenu(state.likes.getNumLikes());
 
 const controlLike = () => {
 	// Create a new likes IF there is not yet
@@ -185,22 +190,27 @@ const controlLike = () => {
 		const newLike = state.likes.addLike(state.recipe.id, state.recipe.title, state.recipe.author, state.recipe.img);
 
 		// toggle the like button
+		likesView.toggleLikeButton(true);
 
 		// add like to UI list
-		console.log(state.likes);
+		likesView.renderLike(newLike);
+		//console.log(state.likes);
 	} else {
 		// User has liked current recipe :
 		// remove like to the state
 		state.likes.deleteLike(currentID);
 
 		// toggle the like button
+		likesView.toggleLikeButton(false);
 
 		// remove like from UI list
-		console.log(state.likes);
+		likesView.deleteLike(currentID);
+		//console.log(state.likes);
 	}
+	likesView.toggleLikeMenu(state.likes.getNumLikes());
 };
 
-// handling recipe button clicks
+// handling recipe button clicks (recipe div)
 elements.recipe.addEventListener('click', (e) => {
 	if (e.target.matches('.btn-decrease, .btn-decrease *')) {
 		// decrease button is clicked
@@ -220,7 +230,7 @@ elements.recipe.addEventListener('click', (e) => {
 		controlLike();
 	}
 
-	console.log(state.recipe);
+	//console.log(state.recipe);
 });
 
 window.L = new List();
